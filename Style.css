@@ -1,0 +1,19 @@
+/* existing styles stay the same */
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem;
+}
+
+#searchBox, #filterSelect {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+#searchBox {
+  width: 250px;
+}

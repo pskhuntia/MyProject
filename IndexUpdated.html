@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Carbon Emission Datasets</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🌍 Carbon Emission Datasets</h1>
+    <p>A curated list of open datasets on global CO₂ & greenhouse gas emissions.</p>
+  </header>
+
+  <section class="controls">
+    <input type="text" id="searchBox" placeholder="🔍 Search datasets...">
+    <select id="filterSelect">
+      <option value="all">All Types</option>
+      <option value="global">Global</option>
+      <option value="country">Country</option>
+      <option value="official">Official</option>
+      <option value="sectoral">Sectoral</option>
+    </select>
+  </section>
+
+  <main>
+    <section id="dataset-list"></section>
+  </main>
+
+  <footer>
+    <p>Made for research & education • Powered by open data</p>
+  </footer>
+
+  <script src="datasets.js"></script>
+  <script>
+    const container = document.getElementById('dataset-list');
+    const searchBox = document.getElementById('searchBox');
+    const filterSelect = document.getElementById('filterSelect');
+
+    function renderDatasets() {
+      container.innerHTML = "";
+      const search = searchBox.value.toLowerCase();
+      const filter = filterSelect.value;
+
+      datasets
+        .filter(ds => {
+          const matchSearch = ds.name.toLowerCase().includes(search) || ds.description.toLowerCase().includes(search);
+          const matchFilter = filter === "all" || ds.type === filter;
+          return matchSearch && matchFilter;
+        })
+        .forEach(ds => {
+          const card = document.createElement('div');
+          card.className = 'dataset-card';
+          card.innerHTML = `
+            <h2>${ds.name}</h2>
+            <p>${ds.description}</p>
+            <a href="${ds.link}" target="_blank">📥 Download / Explore</a>
+          `;
+          container.appendChild(card);
+        });
+    }
+
+    // Event listeners
+    searchBox.addEventListener('input', renderDatasets);
+    filterSelect.addEventListener('change', renderDatasets);
+
+    // Initial render
+    renderDatasets();
+  </script>
+</body>
+</html>
